@@ -1,74 +1,232 @@
-openapi: 3.0.0
+openapi: "3.0.0"
 info:
-  title: Social App
-  description: Our fist Social app at LCO - Zahid
-  version: 1.0.1
+  title: Learning express and swagger
+  description: a course segment about writing docs
+  versio: 1.0
+  contact:
+    email: zahid.786shaikh@gmail.com
+    url: http://zahidshaikh.space
 
 servers:
-  - url: http://localhost:4000/api/v1
-    description: localhost version of our app
-  - url: https://localhost:4000/api/v1
-    description: this is just a dummy api url, it doesn't work
+  - url: "{protocol}://localhost:4000/api/{version}"
+    description: Local development base url (secured)
+    variables:
+      version:
+        enum:
+          - v1
+          - v2
+        default: v1
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
 
 components:
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
     BearerAuth:
       type: http
       scheme: bearer
 
 paths:
-  /instagram:
+  tag: "courses"
+
+  # lco endpoint
+  /lco:
     get:
-      summary: returns username, followers and follows
+      tags:
+        - Courses
+      summary: returns a greet message from LCO
       responses:
-        "200": # status code
-          description: returns an object
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Mystring"
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # lco object endpoint
+  /lcoobject:
+    get:
+      tags:
+        - Courses
+      summary: returns a unique course
+      responses:
+        200:
+          description: All good success
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  username:
+                  id:
                     type: string
-                  followers:
+                  name:
                     type: string
-                  follows:
+                  price:
                     type: string
-    post:
-      summary: returns username, followers and follows
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # get courses endpoint
+  /courses:
+    get:
+      tags:
+        - Courses
+      summary: returns a all courses
       responses:
-        "200": # status code
-          description: returns an object
+        200:
+          description: All good success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  username:
-                    type: string
-                  followers:
-                    type: string
-                  follows:
-                    type: string
-  /{token}:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    price:
+                      type: string
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # get course by id endpoint
+  /courses/{courseId}:
     get:
-      summary: returns whatever is there in parameters
+      tags:
+        - Courses
+      summary: finds a course based on id
       parameters:
-        - name: token
-          default: 5
+        - name: courseId
           in: path
+          required: true
+          default: 11
           schema:
             type: string
       responses:
-        "200": # status code
-          description: returns an object
+        200:
+          description: All good success
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  params:
+                  id:
                     type: string
+                  name:
+                    type: string
+                  price:
+                    type: string
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # add courses endpoint
+  /add-course:
+    post:
+      tags:
+        - Courses
+      summary: adds a new course to existing course
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: string
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: boolean
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # get location access
+  /coursequery:
+    get:
+      tags:
+        - Courses
+      summary: trying to learn about query
+      parameters:
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [delhi, london, maharashtra]
+            default: delhi
+        - name: device
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [web, mobile]
+            default: web
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                  device:
+                    type: string
+        400:
+          description: Bad request
+        500:
+          description: internal server error
+
+  # add course images
+  /course-upload:
+    post:
+      tags:
+        - Courses
+      summary: uploading course image
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: All good success
+        400:
+          description: Bad request
+        500:
+          description: internal server error
