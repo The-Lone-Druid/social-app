@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Social App
-  description: Our fist Social app at LCO - Hitesh
+  description: Our fist Social app at LCO - Zahid
   version: 1.0.1
 
 servers:

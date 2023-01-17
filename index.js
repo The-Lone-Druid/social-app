@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/v1/instagram", (req, res) => {
   const instaSocial = {
-    username: "hiteshchoudharyOfficial",
+    username: "thelonedruid56",
     folowers: 66,
     follows: 70,
     date: format.asString("dd[MM] - hh:mm:ss", new Date())
@@ -28,7 +28,7 @@ app.get("/api/v1/instagram", (req, res) => {
 
 app.get("/api/v1/facebook", (req, res) => {
   const instaSocial = {
-    username: "hiteshchoudharyPage",
+    username: "thelonedruid56",
     folowers: 88,
     follows: 10,
     date: format.asString("dd[MM] - hh:mm:ss", new Date())
@@ -39,7 +39,7 @@ app.get("/api/v1/facebook", (req, res) => {
 
 app.get("/api/v1/linkedin", (req, res) => {
   const instaSocial = {
-    username: "hiteshchoudhary",
+    username: "thelonedruid56",
     folowers: 800,
     follows: 80,
     date: new Date()
