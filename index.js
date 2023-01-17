@@ -1,13 +1,13 @@
 const express = require("express");
 const format = require("date-format");
 const fileUpload = require("express-fileupload");
+require("dotenv").config();
 // swagger docs related
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 const app = express();
 const swaggerDocument = YAML.load("./swagger.yaml");
 const PORT = process.env.PORT || 4000;
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(fileUpload());
@@ -77,4 +77,5 @@ app.post("/api/v1/course-upload", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
   console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);
+  console.log(process.env.PORT);
 });

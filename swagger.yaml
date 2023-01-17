@@ -23,9 +23,9 @@ servers:
         default: http
       domain:
         enum:
-          - localhost:4000
+          - localhost:8080
           - social-app-5e32.onrender.com
-        default: llocalhost:4000
+        default: localhost:8080
 
 components:
   securitySchemes:
